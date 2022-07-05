@@ -4,12 +4,10 @@ const initialState = {
   message: ''
 };
 
-const getGreeting = (payload) => {
-  return {
-    type: GET_GREETING,
-    payload
-  };
-};
+const getGreeting = (payload) => ({
+  type: GET_GREETING,
+  payload
+});
 
 export const fetchGreeting = () => async (dispatch) => {
   const response = await fetch('http://127.0.0.1:3000/v1/message');
