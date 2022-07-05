@@ -1,30 +1,9 @@
-const GET_GREETING = 'GET_GREETING';
+import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'react-redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const initialState = {
-  message: ''
-};
+import messageReducer from './messageReducer';
 
-const getGreeting = (payload) => {
-  return {
-    type: GET_GREETING,
-    payload
-  };
-};
+const store = createStore(messageReducer, composeWithDevTools(applyMiddleware(thunk)));
 
-export const fetchGreeting = () => async (dispatch) => {
-  const response = await fetch('http://127.0.0.1:3000/v1/message');
-  const data = await response.json();
-  dispatch(getGreeting(data.message));
-};
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_GREETING:
-      return {
-        ...state,
-        message: action.payload
-      };
-    default:
-      return state;
-  }
-};
+export default store;
